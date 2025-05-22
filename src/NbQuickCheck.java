@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class NbQuickCheck {
 
@@ -14,6 +15,13 @@ public class NbQuickCheck {
     if(!tree.containsKey(root)) {
       return;
     }
+    System.out.println(root);
+    List<Integer> children = tree.get(root);
+    if(children != null) {
+      for(Integer child: children) {
+        preOrder(tree, child);
+      }
+    }
   }
 
   /**
@@ -24,7 +32,13 @@ public class NbQuickCheck {
    * @return the minimum value in the tree or Integer.MAX_VALUE if root is null
    */
   public static int minVal(Node<Integer> root) {
-    return -1;
+    if (root == null) return Integer.MAX_VALUE;
+    int min = root.value;
+    if (root.children != null) {
+      for (Node<Integer> child : root.children) {
+        min = Math.min(min, minVal(child));
+      }
+    }
+    return min;
   }
-  
 }
